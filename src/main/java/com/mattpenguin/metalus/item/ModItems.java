@@ -1,6 +1,7 @@
 package com.mattpenguin.metalus.item;
 
 import com.mattpenguin.metalus.Metalus;
+import com.mattpenguin.metalus.block.ModBlocks;
 import com.mattpenguin.metalus.common.Constant;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -11,14 +12,27 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
+import javax.annotation.Nonnull;
+
 @ObjectHolder(Constant.MOD_ID)
 public class ModItems {
+
+    @ObjectHolder("debug_tool")
+    public static ItemDebug ITEM_DEBUG;
 
     public static ItemGroup METALUS_ITEM_GROUP;
 
     public static void registerItems(RegistryEvent.Register<Item> register) {
         Metalus.LOGGER.info("Registering items");
+
         IForgeRegistry<Item> registry = register.getRegistry();
+
+        //Items
+        registry.register(new ItemDebug(new Item.Properties().group(METALUS_ITEM_GROUP)).setRegistryName("debug_tool"));
+
+        //Item Blocks
+        registerItemForBlock(registry, ModBlocks.TEST_BLOCK);
+
         Metalus.LOGGER.info("Done registering items");
     }
 
@@ -34,8 +48,9 @@ public class ModItems {
         Metalus.LOGGER.info("Initializing item group");
         METALUS_ITEM_GROUP = new ItemGroup(Constant.MOD_ID) {
             @Override
+            @Nonnull
             public ItemStack createIcon() {
-                return null; // TODO Resolve
+                return new ItemStack(ITEM_DEBUG);
             }
         };
     }

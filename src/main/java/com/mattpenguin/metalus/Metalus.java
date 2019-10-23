@@ -1,9 +1,11 @@
 package com.mattpenguin.metalus;
 
 import com.mattpenguin.metalus.block.ModBlocks;
+import com.mattpenguin.metalus.client.screen.ModScreens;
 import com.mattpenguin.metalus.common.Constant;
 import com.mattpenguin.metalus.container.ModContainerTypes;
 import com.mattpenguin.metalus.item.ModItems;
+import com.mattpenguin.metalus.net.PacketHandler;
 import com.mattpenguin.metalus.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
@@ -36,34 +38,40 @@ public class Metalus {
 
     private void setupCommon(final FMLCommonSetupEvent event) {
         LOGGER.info("Setting up Common");
-        // NO-OP
+
+        PacketHandler.register();
     }
 
     private void setupClient(final FMLClientSetupEvent event) {
         LOGGER.info("Setting up Client");
-        // NO-OP
+
+        ModScreens.register();
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> register) {
+            LOGGER.info("Handling Block Registry Subscription");
             ModBlocks.registerBlocks(register);
         }
 
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> register) {
+            LOGGER.info("Handling Item Registry Subscription");
             ModItems.initItemGroup();
             ModItems.registerItems(register);
         }
 
         @SubscribeEvent
         public static void onTileEntityTypesRegistry(final RegistryEvent.Register<TileEntityType<?>> register) {
+            LOGGER.info("Handling Tile Entity Types Registry Subscription");
             ModTileEntityTypes.registerTypes(register);
         }
 
         @SubscribeEvent
         public static void onContainerTypesRegistry(final RegistryEvent.Register<ContainerType<?>> register) {
+            LOGGER.info("Handling Container Types Registry Subscription");
             ModContainerTypes.registerContainerTypes(register);
         }
     }
