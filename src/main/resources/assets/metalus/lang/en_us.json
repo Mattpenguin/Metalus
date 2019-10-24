@@ -1,5 +1,7 @@
 {
   "itemGroup.metalus": "Metalus Things",
   "block.metalus.test_block": "Test Block",
+  "block.metalus.block_metal_tin": "Block of Tin",
+  "block.metalus.block_metal_copper": "Block of Copper",
   "item.metalus.debug_tool": "Debug Tool"
 }

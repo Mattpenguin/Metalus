@@ -1,6 +1,7 @@
 package com.mattpenguin.metalus.item;
 
 import com.mattpenguin.metalus.Metalus;
+import com.mattpenguin.metalus.block.MetalType;
 import com.mattpenguin.metalus.block.ModBlocks;
 import com.mattpenguin.metalus.common.Constant;
 import net.minecraft.block.Block;
@@ -32,6 +33,8 @@ public class ModItems {
 
         //Item Blocks
         registerItemForBlock(registry, ModBlocks.TEST_BLOCK);
+        registerItemForBlock(registry, ModBlocks.BLOCK_TIN);
+        registerItemForBlock(registry, ModBlocks.BLOCK_COPPER);
 
         Metalus.LOGGER.info("Done registering items");
     }

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "metalus:block/block_metal_copper"
+    }
+  }
+}
