@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ttt",
+    "ttt",
+    "ttt"
+  ],
+  "key": {
+    "t": {
+      "item": "metalus:ingot_metal_tin"
+    }
+  },
+  "result": {
+    "item": "metalus:block_metal_tin",
+    "count": 1
+  }
+}

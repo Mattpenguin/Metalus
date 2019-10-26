@@ -18,8 +18,14 @@ import javax.annotation.Nonnull;
 @ObjectHolder(Constant.MOD_ID)
 public class ModItems {
 
-    @ObjectHolder("debug_tool")
+    @ObjectHolder(Constant.RegistryNames.DEBUG_TOOL)
     public static ItemDebug ITEM_DEBUG;
+
+    @ObjectHolder(Constant.RegistryNames.METAL_INGOT_PREFIX + Constant.Metals.TIN)
+    public static MetalItem INGOT_TIN;
+
+    @ObjectHolder(Constant.RegistryNames.METAL_INGOT_PREFIX + Constant.Metals.COPPER)
+    public static MetalItem INGOT_COPPER;
 
     public static ItemGroup METALUS_ITEM_GROUP;
 
@@ -29,7 +35,12 @@ public class ModItems {
         IForgeRegistry<Item> registry = register.getRegistry();
 
         //Items
-        registry.register(new ItemDebug(new Item.Properties().group(METALUS_ITEM_GROUP)).setRegistryName("debug_tool"));
+        registry.register(new ItemDebug().setRegistryName(Constant.RegistryNames.DEBUG_TOOL));
+
+        for (MetalType metal : MetalType.values()) {
+            registry.register(new MetalItem(new Item.Properties().maxStackSize(64), metal)
+                    .setRegistryName(Constant.RegistryNames.METAL_INGOT_PREFIX + metal.getName()));
+        }
 
         //Item Blocks
         registerItemForBlock(registry, ModBlocks.TEST_BLOCK);
@@ -53,7 +64,7 @@ public class ModItems {
             @Override
             @Nonnull
             public ItemStack createIcon() {
-                return new ItemStack(ITEM_DEBUG);
+                return new ItemStack(INGOT_COPPER);
             }
         };
     }

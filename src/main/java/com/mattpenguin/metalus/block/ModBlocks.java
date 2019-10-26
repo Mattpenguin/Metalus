@@ -10,13 +10,13 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Constant.MOD_ID)
 public class ModBlocks {
 
-    @ObjectHolder(TestBlock.REGISTRY_NAME)
+    @ObjectHolder(Constant.RegistryNames.TEST_BLOCK)
     public static MetalusBlock TEST_BLOCK;
 
-    @ObjectHolder("block_metal_copper")
+    @ObjectHolder(Constant.RegistryNames.METAL_BLOCK_PREFIX + Constant.Metals.COPPER)
     public static MetalBlock BLOCK_COPPER;
 
-    @ObjectHolder("block_metal_tin")
+    @ObjectHolder(Constant.RegistryNames.METAL_BLOCK_PREFIX + Constant.Metals.TIN)
     public static MetalBlock BLOCK_TIN;
 
 
@@ -27,8 +27,9 @@ public class ModBlocks {
 
         registry.register(new TestBlock().setRegistryName(TestBlock.REGISTRY_NAME));
 
-        for(MetalType metalType : MetalType.values()) {
-            registry.register(new MetalBlock(metalType).setRegistryName("block_metal_"+metalType.getName()));
+        for (MetalType metalType : MetalType.values()) {
+            registry.register(new MetalBlock(metalType)
+                    .setRegistryName(Constant.RegistryNames.METAL_BLOCK_PREFIX + metalType.getName()));
         }
 
         Metalus.LOGGER.info("Done registering blocks");
