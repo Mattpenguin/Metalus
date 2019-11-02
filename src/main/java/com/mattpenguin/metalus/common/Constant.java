@@ -7,6 +7,7 @@ public class Constant {
     public static class RegistryNames {
         public static final String TEST_BLOCK = "test_block";
         public static final String METAL_BLOCK_PREFIX = "block_metal_";
+        public static final String ORE_PREFIX = "ore_";
 
         public static final String DEBUG_TOOL = "debug_tool";
         public static final String METAL_INGOT_PREFIX = "ingot_metal_";
@@ -15,5 +16,7 @@ public class Constant {
     public static class Metals {
         public static final String TIN = "tin";
         public static final String COPPER = "copper";
+        public static final String GOLD = "gold";
+        public static final String IRON = "iron";
     }
 }

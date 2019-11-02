@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 public class MetalBlock extends MetalusBlock {
 
     public MetalBlock(MetalType type) {
-        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(type.getHardness()));
+        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(type.getHardness(), type.getResistance()));
     }
 
 }

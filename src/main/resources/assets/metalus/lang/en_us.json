@@ -5,5 +5,7 @@
   "block.metalus.block_metal_copper": "Block of Copper",
   "item.metalus.debug_tool": "Debug Tool",
   "item.metalus.ingot_metal_copper": "Copper Ingot",
-  "item.metalus.ingot_metal_tin": "Tin Ingot"
+  "item.metalus.ingot_metal_tin": "Tin Ingot",
+  "block.metalus.ore_tin": "Tin Ore",
+  "block.metalus.ore_copper": "Copper Ore"
 }

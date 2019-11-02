@@ -14,6 +14,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 
 @ObjectHolder(Constant.MOD_ID)
 public class ModItems {
@@ -22,10 +23,10 @@ public class ModItems {
     public static ItemDebug ITEM_DEBUG;
 
     @ObjectHolder(Constant.RegistryNames.METAL_INGOT_PREFIX + Constant.Metals.TIN)
-    public static MetalItem INGOT_TIN;
+    public static MetalusItem INGOT_TIN;
 
     @ObjectHolder(Constant.RegistryNames.METAL_INGOT_PREFIX + Constant.Metals.COPPER)
-    public static MetalItem INGOT_COPPER;
+    public static MetalusItem INGOT_COPPER;
 
     public static ItemGroup METALUS_ITEM_GROUP;
 
@@ -37,15 +38,17 @@ public class ModItems {
         //Items
         registry.register(new ItemDebug().setRegistryName(Constant.RegistryNames.DEBUG_TOOL));
 
-        for (MetalType metal : MetalType.values()) {
-            registry.register(new MetalItem(new Item.Properties().maxStackSize(64), metal)
-                    .setRegistryName(Constant.RegistryNames.METAL_INGOT_PREFIX + metal.getName()));
-        }
+        Arrays.stream(MetalType.values()).filter(MetalType::generateFor).forEach(m -> {
+            registry.register(new MetalusItem(new Item.Properties().maxStackSize(64))
+                    .setRegistryName(Constant.RegistryNames.METAL_INGOT_PREFIX + m.getName()));
+        });
 
         //Item Blocks
         registerItemForBlock(registry, ModBlocks.TEST_BLOCK);
         registerItemForBlock(registry, ModBlocks.BLOCK_TIN);
         registerItemForBlock(registry, ModBlocks.BLOCK_COPPER);
+        registerItemForBlock(registry, ModBlocks.ORE_COPPER);
+        registerItemForBlock(registry, ModBlocks.ORE_TIN);
 
         Metalus.LOGGER.info("Done registering items");
     }

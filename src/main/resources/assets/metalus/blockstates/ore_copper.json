@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "metalus:block/ore_copper"
+    }
+  }
+}
