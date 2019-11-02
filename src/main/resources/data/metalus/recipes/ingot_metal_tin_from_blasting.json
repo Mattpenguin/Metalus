@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "group": "ingot_metal_tin",
+  "ingredient": {
+    "item": "metalus:ore_tin"
+  },
+  "result": "metalus:ingot_metal_tin",
+  "experience": 0.4,
+  "cookingtime": 100
+}

@@ -7,6 +7,7 @@ import com.mattpenguin.metalus.container.ModContainerTypes;
 import com.mattpenguin.metalus.item.ModItems;
 import com.mattpenguin.metalus.net.PacketHandler;
 import com.mattpenguin.metalus.tileentity.ModTileEntityTypes;
+import com.mattpenguin.metalus.world.MetalusOreGen;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -40,6 +41,9 @@ public class Metalus {
         LOGGER.info("Setting up Common");
 
         PacketHandler.register();
+
+        MetalusOreGen.addOre(ModBlocks.ORE_TIN, 6);
+        MetalusOreGen.addOre(ModBlocks.ORE_COPPER, 7);
     }
 
     private void setupClient(final FMLClientSetupEvent event) {

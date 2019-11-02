@@ -4,13 +4,12 @@ import com.mattpenguin.metalus.Metalus;
 import com.mattpenguin.metalus.common.Constant;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 @ObjectHolder(Constant.MOD_ID)
 public class ModBlocks {
@@ -41,6 +40,8 @@ public class ModBlocks {
         Arrays.stream(MetalType.values()).filter(MetalType::generateFor).forEach(m -> {
             registry.register(new MetalusOre(
                     Block.Properties.create(Material.ROCK)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(1)
                             .hardnessAndResistance(2F, 3F), 0, 0)
                     .setRegistryName(Constant.RegistryNames.ORE_PREFIX + m.getName())
             );

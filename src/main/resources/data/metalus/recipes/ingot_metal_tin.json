@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ingot_metal_tin",
+  "ingredients": [
+    {"item": "metalus:block_metal_tin"}
+  ],
+  "result": {
+    "item": "metalus:ingot_metal_tin",
+    "count": 9
+  }
+}

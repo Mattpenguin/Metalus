@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "group": "ingot_metal_copper",
+  "ingredient": {
+    "item": "metalus:ore_copper"
+  },
+  "result": "metalus:ingot_metal_copper",
+  "experience": 0.4,
+  "cookingtime": 200
+}
