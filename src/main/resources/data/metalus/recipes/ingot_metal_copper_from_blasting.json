@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smelting",
+  "type": "minecraft:blasting",
   "group": "ingot_metal_copper",
   "ingredient": {
     "item": "metalus:ore_copper"

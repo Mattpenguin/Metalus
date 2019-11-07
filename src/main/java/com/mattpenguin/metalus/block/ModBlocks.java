@@ -2,54 +2,46 @@ package com.mattpenguin.metalus.block;
 
 import com.mattpenguin.metalus.Metalus;
 import com.mattpenguin.metalus.common.Constant;
+import com.mattpenguin.metalus.common.Util;
+import com.mattpenguin.metalus.item.MetalusBlockItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-@ObjectHolder(Constant.MOD_ID)
+@Mod.EventBusSubscriber(modid = Constant.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBlocks {
 
-    @ObjectHolder(Constant.RegistryNames.TEST_BLOCK)
-    public static MetalusBlock TEST_BLOCK;
-
-    @ObjectHolder(Constant.RegistryNames.METAL_BLOCK_PREFIX + Constant.Metals.COPPER)
-    public static MetalBlock BLOCK_COPPER;
-
-    @ObjectHolder(Constant.RegistryNames.METAL_BLOCK_PREFIX + Constant.Metals.TIN)
-    public static MetalBlock BLOCK_TIN;
-
-    @ObjectHolder(Constant.RegistryNames.ORE_PREFIX + Constant.Metals.COPPER)
-    public static MetalusOre ORE_COPPER;
-
-    @ObjectHolder(Constant.RegistryNames.ORE_PREFIX + Constant.Metals.TIN)
-    public static MetalusOre ORE_TIN;
+    private static List<Block> blocks = new ArrayList<>();
 
 
-    public static void registerBlocks(RegistryEvent.Register<Block> register) {
+    public static void addBlock(Block block) {
+        blocks.add(block);
+    }
+
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
         Metalus.LOGGER.info("Registering blocks");
 
-        IForgeRegistry<Block> registry = register.getRegistry();
-
-        registry.register(new TestBlock().setRegistryName(TestBlock.REGISTRY_NAME));
-
-        Arrays.stream(MetalType.values()).filter(MetalType::generateFor).forEach(m -> {
-            registry.register(new MetalusOre(
-                    Block.Properties.create(Material.ROCK)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(1)
-                            .hardnessAndResistance(2F, 3F), 0, 0)
-                    .setRegistryName(Constant.RegistryNames.ORE_PREFIX + m.getName())
-            );
-            registry.register(new MetalBlock(m)
-                    .setRegistryName(Constant.RegistryNames.METAL_BLOCK_PREFIX + m.getName()));
-
-        });
+        Util.checkNames(blocks).stream().peek(b -> Metalus.LOGGER.debug("$#$Registering {} (class {})", b, b.getClass())).forEach(event.getRegistry()::register);
 
         Metalus.LOGGER.info("Done registering blocks");
+    }
+
+    public static void construct() {
+        MetalusBlocks.MetalBlock.copperBlock = new MetalBlock(MetalType.COPPER);
+        MetalusBlocks.MetalBlock.tinBlock = new MetalBlock(MetalType.TIN);
+
+        Block.Properties defaultOreProperties = Block.Properties.create(Material.ROCK).hardnessAndResistance(3, 15);
+        MetalusBlocks.Ores.copperOre = new MetalusOre(Constant.RegistryNames.ORE_PREFIX + MetalType.COPPER.getName(), defaultOreProperties);
+        MetalusBlocks.Ores.tinOre = new MetalusOre(Constant.RegistryNames.ORE_PREFIX + MetalType.TIN.getName(), defaultOreProperties);
+
+        MetalusBlocks.Misc.testBlock = new MetalusBlock(Constant.RegistryNames.TEST_BLOCK, defaultOreProperties, MetalusBlockItem.class);
+
+        Block.Properties defaultFluidProperties = Block.Properties.create(Material.LAVA).doesNotBlockMovement().hardnessAndResistance(100F).noDrops();
     }
 }

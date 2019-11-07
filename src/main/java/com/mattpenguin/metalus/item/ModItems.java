@@ -2,73 +2,38 @@ package com.mattpenguin.metalus.item;
 
 import com.mattpenguin.metalus.Metalus;
 import com.mattpenguin.metalus.block.MetalType;
-import com.mattpenguin.metalus.block.ModBlocks;
 import com.mattpenguin.metalus.common.Constant;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
+import com.mattpenguin.metalus.common.Util;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-import javax.annotation.Nonnull;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-@ObjectHolder(Constant.MOD_ID)
+@Mod.EventBusSubscriber(modid = Constant.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModItems {
 
-    @ObjectHolder(Constant.RegistryNames.DEBUG_TOOL)
-    public static ItemDebug ITEM_DEBUG;
+    private static List<Item> items = new ArrayList<>();
 
-    @ObjectHolder(Constant.RegistryNames.METAL_INGOT_PREFIX + Constant.Metals.TIN)
-    public static MetalusItem INGOT_TIN;
+    public static void addItem(Item item){
+        items.add(item);
+    }
 
-    @ObjectHolder(Constant.RegistryNames.METAL_INGOT_PREFIX + Constant.Metals.COPPER)
-    public static MetalusItem INGOT_COPPER;
-
-    public static ItemGroup METALUS_ITEM_GROUP;
-
-    public static void registerItems(RegistryEvent.Register<Item> register) {
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
         Metalus.LOGGER.info("Registering items");
 
-        IForgeRegistry<Item> registry = register.getRegistry();
-
-        //Items
-        registry.register(new ItemDebug().setRegistryName(Constant.RegistryNames.DEBUG_TOOL));
-
-        Arrays.stream(MetalType.values()).filter(MetalType::generateFor).forEach(m -> {
-            registry.register(new MetalusItem(new Item.Properties().maxStackSize(64))
-                    .setRegistryName(Constant.RegistryNames.METAL_INGOT_PREFIX + m.getName()));
-        });
-
-        //Item Blocks
-        registerItemForBlock(registry, ModBlocks.TEST_BLOCK);
-        registerItemForBlock(registry, ModBlocks.BLOCK_TIN);
-        registerItemForBlock(registry, ModBlocks.BLOCK_COPPER);
-        registerItemForBlock(registry, ModBlocks.ORE_COPPER);
-        registerItemForBlock(registry, ModBlocks.ORE_TIN);
+        Util.checkNames(items).forEach(event.getRegistry()::register);
 
         Metalus.LOGGER.info("Done registering items");
     }
 
-    private static void registerItemForBlock(IForgeRegistry<Item> registry, Block... blocks) {
-        for (Block block : blocks) {
-            Item i = new BlockItem(block, new Item.Properties().group(METALUS_ITEM_GROUP));
-            i.setRegistryName(block.getRegistryName()); // TODO Resolve warning
-            registry.register(i);
-        }
-    }
+    public static void constuct() {
+        MetalusItems.Misc.debugTool = new ItemDebug(Constant.RegistryNames.DEBUG_TOOL);
 
-    public static void initItemGroup() {
-        Metalus.LOGGER.info("Initializing item group");
-        METALUS_ITEM_GROUP = new ItemGroup(Constant.MOD_ID) {
-            @Override
-            @Nonnull
-            public ItemStack createIcon() {
-                return new ItemStack(INGOT_COPPER);
-            }
-        };
+        MetalusItems.Ingots.ingotCopper = new MetalusItem(Constant.RegistryNames.METAL_INGOT_PREFIX + MetalType.COPPER.getName());
+        MetalusItems.Ingots.ingotTin = new MetalusItem(Constant.RegistryNames.METAL_INGOT_PREFIX + MetalType.TIN.getName());
     }
 }

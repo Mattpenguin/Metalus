@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 
 public class ItemDebug extends MetalusItem {
-    public ItemDebug() {
-        super();
+    public ItemDebug(String name) {
+        super(name);
     }
 
     @Override

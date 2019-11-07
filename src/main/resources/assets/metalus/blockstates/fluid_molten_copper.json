@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "metalus:block/fluid_molten_copper"
+    }
+  }
+}
