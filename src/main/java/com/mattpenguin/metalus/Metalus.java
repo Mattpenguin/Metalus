@@ -5,12 +5,15 @@ import com.mattpenguin.metalus.block.ModBlocks;
 import com.mattpenguin.metalus.client.screen.ModScreens;
 import com.mattpenguin.metalus.common.Constant;
 import com.mattpenguin.metalus.fluid.ModFluids;
+import com.mattpenguin.metalus.handler.Handlers;
 import com.mattpenguin.metalus.item.MetalusItems;
 import com.mattpenguin.metalus.item.ModItems;
 import com.mattpenguin.metalus.net.PacketHandler;
 import com.mattpenguin.metalus.world.MetalusOreGen;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -33,12 +36,13 @@ public class Metalus {
         loadBus.addListener(this::setupCommon);
         loadBus.addListener(this::fingerprintViolation);
 
+
         constructAll();
     }
 
     public void constructAll() {
         LOGGER.info("Constructing mod objects");
-        ModItems.constuct();
+        ModItems.construct();
         ModBlocks.construct();
         ModFluids.construct();
         LOGGER.info("Done constructing objects");
@@ -48,6 +52,8 @@ public class Metalus {
         LOGGER.info("Setting up Common");
 
         PacketHandler.register();
+
+        MinecraftForge.EVENT_BUS.register(new Handlers());
 
         MetalusOreGen.addOre(MetalusBlocks.Ores.tinOre, 6);
         MetalusOreGen.addOre(MetalusBlocks.Ores.copperOre, 7);

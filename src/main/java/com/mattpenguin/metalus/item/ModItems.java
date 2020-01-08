@@ -30,10 +30,19 @@ public class ModItems {
         Metalus.LOGGER.info("Done registering items");
     }
 
-    public static void constuct() {
+    public static void construct() {
         MetalusItems.Misc.debugTool = new ItemDebug(Constant.RegistryNames.DEBUG_TOOL);
+        MetalusItems.Misc.debugOre = new ItemOreGenDebug(Constant.RegistryNames.DEBUG_ORE);
+
 
         MetalusItems.Ingots.ingotCopper = new MetalusItem(Constant.RegistryNames.METAL_INGOT_PREFIX + MetalType.COPPER.getName());
         MetalusItems.Ingots.ingotTin = new MetalusItem(Constant.RegistryNames.METAL_INGOT_PREFIX + MetalType.TIN.getName());
+
+        MetalusItems.Tool.breakingHammer = new ItemBreakingHammer(Constant.RegistryNames.BREAKING_HAMMER);
+
+        MetalusItems.Chunk.copper = new MetalusItem(Constant.RegistryNames.CHUNK_PREFIX + MetalType.COPPER.getName());
+        MetalusItems.Chunk.tin = new MetalusItem(Constant.RegistryNames.CHUNK_PREFIX + MetalType.TIN.getName());
+        MetalusItems.Chunk.gold = new MetalusItem(Constant.RegistryNames.CHUNK_PREFIX + MetalType.IRON.getName());
+        MetalusItems.Chunk.copper = new MetalusItem(Constant.RegistryNames.CHUNK_PREFIX + MetalType.GOLD.getName());
     }
 }

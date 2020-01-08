@@ -4,8 +4,14 @@
   "block.metalus.block_metal_tin": "Block of Tin",
   "block.metalus.block_metal_copper": "Block of Copper",
   "item.metalus.debug_tool": "Debug Tool",
+  "item.metalus.ore_debug": "Ore Vein Debugger",
   "item.metalus.ingot_metal_copper": "Copper Ingot",
   "item.metalus.ingot_metal_tin": "Tin Ingot",
   "block.metalus.ore_tin": "Tin Ore",
-  "block.metalus.ore_copper": "Copper Ore"
+  "block.metalus.ore_copper": "Copper Ore",
+  "item.metalus.ore_chunk_tin": "Tin Chunk",
+  "item.metalus.ore_chunk_copper": "Copper Chunk",
+  "item.metalus.ore_chunk_iron": "Iron Chunk",
+  "item.metalus.ore_chunk_gold": "Gold Chunk",
+  "item.metalus.breaking_hammer": "Breaking Hammer"
 }

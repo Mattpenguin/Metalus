@@ -2,9 +2,15 @@ package com.mattpenguin.metalus.net;
 
 import com.mattpenguin.metalus.Metalus;
 import com.mattpenguin.metalus.common.Constant;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class PacketHandler {
     private static final String PROTOCOL_VERSION = "1";
@@ -14,30 +20,18 @@ public class PacketHandler {
             .serverAcceptedVersions(PROTOCOL_VERSION::equals)
             .networkProtocolVersion(() -> PROTOCOL_VERSION)
             .simpleChannel();
+    private static int index;
 
     public static void register() {
-        int discriminator = 0;
+        registerMessage(OreDebugPacket.class, OreDebugPacket::encode, OreDebugPacket::decode, OreDebugPacket.Handler::handle);
     }
 
-    public static void sendToServer(IMetalusMessage message) {
-        HANDLER.sendToServer(message);
+    private static <M> void registerMessage(Class<M> type, BiConsumer<M, PacketBuffer> encoder, Function<PacketBuffer, M> decoder, BiConsumer<M, Supplier<NetworkEvent.Context>> consumer) {
+        HANDLER.registerMessage(index++, type, encoder, decoder, consumer);
     }
 
-    private static void register(int id, Class<IMetalusMessage> messageClass) {
-        HANDLER.registerMessage(id, messageClass, IMetalusMessage::write, (pb) -> {
-            IMetalusMessage instance = null;
-            try {
-                instance = messageClass.newInstance();
-                instance.read(pb);
-            } catch (InstantiationException e) {
-                Metalus.LOGGER.error("Instantiation Exception while handling message id " + id);
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                Metalus.LOGGER.error("Illegal Access Exception while handling message id " + id);
-                e.printStackTrace();
-            }
-            return instance;
-        }, IMetalusMessage::enqueue);
+    public static void sendToServer(Object msg) {
+        HANDLER.sendToServer(msg);
     }
 
 }
